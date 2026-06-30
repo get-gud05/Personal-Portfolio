@@ -1,4 +1,35 @@
 import SocialCard from "./SocialCard";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+    hidden: {
+        transition: {
+            staggerChildren: 0.06,
+            staggerDirection: -1,
+        },
+    },
+    visible: {
+        transition: {
+            delayChildren: 0.1,
+            staggerChildren: 0.18,
+        },
+    },
+};
+
+const linkVariants = {
+    hidden: {
+        opacity: 0,
+        x: 40,
+    },
+    visible: {
+        opacity: 1,
+        x: 0,
+        transition: {
+            duration: 0.45,
+            ease: "easeOut",
+        },
+    },
+};
 
 const socials = [
     {
@@ -28,18 +59,27 @@ const socials = [
     },
 ];
 
-function SocialLinks() {
+function SocialLinks({ isVisible }) {
     return (
-        <div className="bg-neutral-100 flex flex-col justify-center px-20 gap-5">
+        <motion.div
+            className="bg-neutral-100 flex flex-col justify-center px-20 gap-5"
+            variants={containerVariants}
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+        >
 
-            {socials.map((item) => (
-                <SocialCard
-                    key={item.title}
-                    {...item}
-                />
+            {socials.map((social) => (
+
+                <motion.div
+                    key={social.title}
+                    variants={linkVariants}
+                >
+                    <SocialCard {...social} />
+                </motion.div>
+
             ))}
 
-        </div>
+        </motion.div>
     );
 }
 

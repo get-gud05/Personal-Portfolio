@@ -1,12 +1,38 @@
+import { motion } from "framer-motion";
 import SocialLinks from "../Social/SocialLinks";
 
-function AboutPanel() {
+const containerVariants = {
+    hidden: {},
+    visible: {
+        transition: {
+            staggerChildren: 0.18,
+            delayChildren: 0.2,
+        },
+    },
+};
+
+const itemVariants = {
+    hidden: {
+        opacity: 0,
+        y: 25,
+    },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.6,
+            ease: "easeOut",
+        },
+    },
+};
+
+function AboutPanel({ showContent }) {
     return (
         <div className="absolute inset-0">
 
             <div className="grid h-full grid-cols-2">
 
-                <div
+                <motion.div
                     className="
                     flex
                     flex-col
@@ -14,20 +40,23 @@ function AboutPanel() {
                     px-20
                     text-white
                     "
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
                 >
-                    <p className="mb-6 text-sm tracking-[0.35em] uppercase">
+                    <motion.p variants={itemVariants} className="mb-6 text-sm tracking-[0.35em] uppercase">
                         ABOUT.
-                    </p>
+                    </motion.p>
 
-                    <h2 className="text-7xl font-black">
+                    <motion.h2 variants={itemVariants} className="text-7xl font-black">
                         Akshat
                         <br />
                         <span className="text-black">
                             Dangwal.
                         </span>
-                    </h2>
+                    </motion.h2>
 
-                    <p className="mt-10 max-w-md text-lg leading-8 text-red-100">
+                    <motion.p variants={itemVariants} className="mt-10 max-w-md text-lg leading-8 text-red-100">
 
                         Competitive Programmer.
 
@@ -39,9 +68,9 @@ function AboutPanel() {
 
                         Learning LLMs, RAG & AI.
 
-                    </p>
+                    </motion.p>
 
-                    <a
+                    <motion.a variants={itemVariants}
                         href="/Resume.pdf"
                         className="
                         mt-12
@@ -57,11 +86,11 @@ function AboutPanel() {
                         "
                     >
                         View Resume →
-                    </a>
+                    </motion.a>
 
-                </div>
+                </motion.div>
 
-                <SocialLinks />
+                <SocialLinks isVisible={showContent} />
 
             </div>
 

@@ -1,5 +1,5 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef } from "react";
+import { motion, useMotionValueEvent, useScroll, useTransform, useSpring } from "framer-motion";
+import { useRef, useState } from "react";
 
 import SplitBackground from "./SplitBackground";
 import HeroPanel from "./HeroContent";
@@ -7,6 +7,7 @@ import AboutPanel from "./AboutContent";
 
 function Landing() {
     const ref = useRef(null);
+    const [showAboutContent, setShowAboutContent] = useState(false);
 
     const { scrollYProgress } = useScroll({
         target: ref,
@@ -51,6 +52,20 @@ function Landing() {
         [120, 0]
     );
 
+    useMotionValueEvent(smoothProgress, "change", (latest) => {
+        setShowAboutContent((current) => {
+            if (!current && latest >= 0.52) {
+                return true;
+            }
+
+            if (current && latest <= 0.42) {
+                return false;
+            }
+
+            return current;
+        });
+    });
+
     return (
         <section
             ref={ref}
@@ -78,7 +93,7 @@ function Landing() {
                         y: aboutY,
                     }}
                 >
-                    <AboutPanel />
+                    <AboutPanel showContent={showAboutContent} />
                 </motion.div>
 
             </div>
