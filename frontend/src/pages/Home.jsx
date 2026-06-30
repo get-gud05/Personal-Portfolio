@@ -1,13 +1,7 @@
-import Hero from "../components/Hero/Hero";
-import Intro from "../components/Intro/Intro";
+import HeroScene from "../components/HeroScene/HeroScene";
 
 function Home() {
-    return (
-        <>
-            <Hero />
-            <Intro />
-        </>
-    );
+    return <HeroScene />;
 }
 
 export default Home;

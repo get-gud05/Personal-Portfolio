@@ -9,3 +9,17 @@ html {
 body {
     overflow-x: hidden;
 }
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* Firefox */
+html {
+    scrollbar-width: none;
+}
+
+/* IE/Old Edge */
+body {
+    -ms-overflow-style: none;
+}
