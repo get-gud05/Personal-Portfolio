@@ -1,4 +1,4 @@
-import HeroScene from "../components/HeroScene/HeroScene";
+import HeroScene from "../components/Landing/Landing";
 
 function Home() {
     return <HeroScene />;

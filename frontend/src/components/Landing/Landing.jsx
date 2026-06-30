@@ -2,10 +2,10 @@ import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 
 import SplitBackground from "./SplitBackground";
-import HeroPanel from "./HeroPanel";
-import AboutPanel from "./AboutPanel";
+import HeroPanel from "./HeroContent";
+import AboutPanel from "./AboutContent";
 
-function HeroScene() {
+function Landing() {
     const ref = useRef(null);
 
     const { scrollYProgress } = useScroll({
@@ -86,4 +86,4 @@ function HeroScene() {
     );
 }
 
-export default HeroScene;
+export default Landing;

@@ -1,4 +1,4 @@
-import SocialLinks from "../Intro/SocialLinks";
+import SocialLinks from "../Social/SocialLinks";
 
 function AboutPanel() {
     return (
