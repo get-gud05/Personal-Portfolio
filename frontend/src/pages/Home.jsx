@@ -1,7 +1,7 @@
-import HeroScene from "../components/Landing/Landing";
+import Landing from "../components/Landing/Landing";
 
 function Home() {
-    return <HeroScene />;
+    return <Landing />;
 }
 
 export default Home;
