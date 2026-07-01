@@ -4,10 +4,11 @@ import { useRef, useState } from "react";
 import SplitBackground from "./SplitBackground";
 import HeroPanel from "./HeroContent";
 import AboutPanel from "./AboutContent";
+import ProjectsPanel from "./ProjectsPanel";
 
 function Landing() {
     const ref = useRef(null);
-    const [showAboutContent, setShowAboutContent] = useState(false);
+    const [activePanel, setActivePanel] = useState("hero");
 
     const { scrollYProgress } = useScroll({
         target: ref,
@@ -42,34 +43,49 @@ function Landing() {
     // About animation
     const aboutOpacity = useTransform(
         smoothProgress,
-        [0.35, 0.65],
-        [0, 1]
+        [0.3, 0.48, 0.62, 0.82],
+        [0, 1, 1, 0]
     );
 
     const aboutY = useTransform(
         smoothProgress,
-        [0.35, 0.65],
+        [0.3, 0.48, 0.62, 0.82],
+        [120, 0, 0, -100]
+    );
+
+    const aboutScale = useTransform(
+        smoothProgress,
+        [0.62, 0.82],
+        [1, 0.95]
+    );
+
+    // Projects animation
+    const projectsOpacity = useTransform(
+        smoothProgress,
+        [0.68, 0.88],
+        [0, 1]
+    );
+
+    const projectsY = useTransform(
+        smoothProgress,
+        [0.68, 0.88],
         [120, 0]
     );
 
     useMotionValueEvent(smoothProgress, "change", (latest) => {
-        setShowAboutContent((current) => {
-            if (!current && latest >= 0.52) {
-                return true;
-            }
-
-            if (current && latest <= 0.42) {
-                return false;
-            }
-
-            return current;
-        });
+        if (latest < 0.35) {
+            setActivePanel("hero");
+        } else if (latest < 0.65) {
+            setActivePanel("about");
+        } else {
+            setActivePanel("projects");
+        }
     });
 
     return (
         <section
             ref={ref}
-            className="relative h-[300vh]"
+            className="relative h-[500vh]"
         >
             <div className="sticky top-0 h-screen overflow-hidden">
 
@@ -91,9 +107,20 @@ function Landing() {
                     style={{
                         opacity: aboutOpacity,
                         y: aboutY,
+                        scale: aboutScale,
                     }}
                 >
-                    <AboutPanel showContent={showAboutContent} />
+                    <AboutPanel showContent={activePanel === "about"} />
+                </motion.div>
+
+                <motion.div
+                    className="absolute inset-0"
+                    style={{
+                        opacity: projectsOpacity,
+                        y: projectsY,
+                    }}
+                >
+                    <ProjectsPanel isVisible={activePanel === "projects"} />
                 </motion.div>
 
             </div>
